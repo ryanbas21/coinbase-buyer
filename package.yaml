@@ -1,0 +1,65 @@
+name:                coinbase-buyer
+version:             0.1.0.0
+github:              "githubuser/coinbase-buyer"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2020 Author name here"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/coinbase-buyer#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- wreq >= 0.5.3.2 && < 1
+- dotenv >= 0.8.4 && < 1
+- mtl
+- lens
+- lens-aeson
+- text
+- aeson
+- containers
+
+library:
+  source-dirs: src
+
+executables:
+  coinbase-buyer-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - coinbase-buyer
+    default-extensions:
+         TemplateHaskell
+       , FlexibleInstances 
+       , FlexibleContexts 
+       , RankNTypes 
+       , ScopedTypeVariables 
+       , TypeApplications 
+       , TypeFamilies 
+         InstanceSigs 
+
+tests:
+  coinbase-buyer-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - coinbase-buyer
