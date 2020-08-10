@@ -10,6 +10,7 @@ module Main where
 import Configuration.Dotenv (Config, defaultConfig, loadFile)
 import Control.Monad.Reader
 import Data.Aeson
+import qualified Data.ByteString as B
 import qualified Data.Text as T
 import Data.Time.Clock.POSIX
 
@@ -26,13 +27,24 @@ data OrderBody = OrderBody
     side :: T.Text,
     product_id :: T.Text
   }
+  deriving (Show)
 
 instance ToJSON OrderBody where
   toJSON (OrderBody price size side product_id) =
-    object ["price" .= price, "size" .= size, "side" .= side, product_id .= product_id]
+    object
+      [ "price" .= price,
+        "size" .= size,
+        "side" .= side,
+        product_id .= product_id
+      ]
 
   toEncoding (OrderBody price size side product_id) =
-    pairs ("price" .= price <> "size" .= size <> "side" .= side <> product_id .= product_id)
+    pairs
+      ( "price" .= price
+          <> "size" .= size
+          <> "side" .= side
+          <> product_id .= product_id
+      )
 
 gdaxConfig :: IO GdaxConfig
 gdaxConfig = loadFile defaultConfig
@@ -49,13 +61,13 @@ btcOrder =
       product_id = "BTC-USD"
     }
 
--- createRequest :: TimeStamp -> Method -> RequestPath -> a -> IO ()
+createRequest :: B.ByteString -> B.ByteString
 createRequest time = do
-  value <- time <> "GET" <> "/orders" <> (show $ toJSON btcOrder)
+  value <- time <> (B.pack "GET") <> (B.pack "/orders") <> (encode btcOrder)
   pure value
 
 main :: IO ()
 main = do
   -- config <- gdaxConfig
-  time <- show <$> getTime
-  putStrLn $ (createRequest time)
+  time <- B.pack . fromIntegral <$> getTime
+  B.putStrLn $ (createRequest time)

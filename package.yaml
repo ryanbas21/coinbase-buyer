@@ -30,6 +30,7 @@ dependencies:
 - aeson
 - containers
 - time
+- bytestring
 
 library:
   source-dirs: src

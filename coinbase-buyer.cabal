@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d28cce92d5ef03dca6b41ed9f477202e67aa918ffb932af74d24000a9659143b
+-- hash: 0f7f46a3774a6c1efc560bfec3842bf9ec09b056ba841249183db8aa7e66e281
 
 name:           coinbase-buyer
 version:        0.1.0.0
@@ -35,6 +35,7 @@ library
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , containers
     , dotenv
     , lens
@@ -56,6 +57,7 @@ executable coinbase-buyer-exe
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , coinbase-buyer
     , containers
     , dotenv
@@ -78,6 +80,7 @@ test-suite coinbase-buyer-test
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , coinbase-buyer
     , containers
     , dotenv
